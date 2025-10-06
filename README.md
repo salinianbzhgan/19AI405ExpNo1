@@ -40,49 +40,76 @@
 <p>Treat unhealthy patients in each room. And check for the unhealthy patients in random room</p>
 <h3>STEP 5:</h3>
 <p>Measure the performance parameters: For each treatment performance incremented, for each movement performance decremented</p>
-##PROGRAM:
-```
+<h3>Program</h3>
+
+python
 import random
-ROOMS = ["Room 1", "Room 2"]
-FEVER_THRESHOLD = 98.5
-environment = {
-    "Room 1": round(random.uniform(97.0, 101.0), 1),
-    "Room 2": round(random.uniform(97.0, 101.0), 1)
-}
-agent_location = "Room 1"
-performance_score = 0
 
-def check_temperature(room):
-    temp = environment[room]
-    print(f"Checking {room}... Patient temperature: {temp}°F")
-    return temp
+class VacuumCleanerAgent:
+    def __init__(self):  # Initialize the agent's state (location and dirt status)
+        self.location = "A"  # Initial location (can be "A" or "B")
+        self.dirt_status = {
+            "A": True,
+            "B": True,
+        }  # Initial dirt status (False means no dirt)
+        self.performance = 0
 
-def treat_patient(room):
-    global performance_score
-    print(f"Treating patient in {room}... ")
-    performance_score += 1  # successful treatment
+    def move_left(self):  # Move the agent to the left if possible
+        if self.location == "B":
+            self.location = "A"
 
-def move_to(room):
-    global agent_location, performance_score
-    if agent_location != room:
-        print(f"Moving from {agent_location} to {room}... ")
-        agent_location = room
-        performance_score -= 1  # movement cost
-print("Medicine Prescribing Agent Simulation Started \n")
+    def move_right(self):  # Move the agent to the right if possible
+        if self.location == "A":
+            self.location = "B"
 
-for room in ROOMS:
-    move_to(room)
-    temp = check_temperature(room)
-    if temp > FEVER_THRESHOLD:
-        treat_patient(room)
-    else:
-        print(f"No treatment needed in {room}.\n")
-print("\nSimulation Complete!")
-print(f"Final Performance Score: {performance_score}")
-print("Environment State:", environment)
-```
-##OUTPUT:
-<img width="967" height="477" alt="image" src="https://github.com/user-attachments/assets/46e84647-45fb-48d5-8ba0-08cdfb2a43df" />
+    def suck_dirt(self):  # Suck dirt in the current location if there is dirt
+        if self.dirt_status[self.location]:
+            self.dirt_status[self.location] = False
+            print(f"Sucked dirt in location {self.location}")
 
-##RESULT:
+    def do_nothing(self):  # Do nothing
+        pass
+
+    def perform_action(self, action):  # Perform the specified action
+        if action == "left":
+            self.performance = self.performance - 1
+            self.move_left()
+        elif action == "right":
+            self.performance = self.performance - 1
+            self.move_right()
+        elif action == "suck":
+            self.performance = self.performance + 10
+            self.suck_dirt()
+        elif action == "nothing":
+            self.do_nothing()
+        else:
+            print("Invalid action")
+
+    def print_status(self):  # Print the current status of the agent
+        print(f"Location: {self.location}, Dirt Status: {self.dirt_status}, ", end="")
+        print(f"Perfomance Measure: {self.performance}")
+
+
+# Example usage:
+agent = VacuumCleanerAgent()
+# Move the agent, suck dirt, and do nothing
+agent.perform_action("left")
+agent.print_status()
+agent.perform_action("suck")
+agent.print_status()
+agent.perform_action("right")
+agent.print_status()
+agent.perform_action("suck")
+agent.print_status()
+agent.perform_action("nothing")
+agent.print_status()
+
+
+## Output:
+<img width="900" height="201" alt="Screenshot 2025-09-23 132211" src="https://github.com/user-attachments/assets/04b86cb5-bb9b-4697-a78e-d882a627779c" />
+
+
+
+## Result:
+
 Thus the Developing AI Agent with PEAS Description was implemented using python programming.
