@@ -41,7 +41,7 @@
 <h3>STEP 5:</h3>
 <p>Measure the performance parameters: For each treatment performance incremented, for each movement performance decremented</p>
 ##PROGRAM:
-```
+~~~
 import random
 ROOMS = ["Room 1", "Room 2"]
 FEVER_THRESHOLD = 98.5
@@ -80,7 +80,7 @@ for room in ROOMS:
 print("\nSimulation Complete!")
 print(f"Final Performance Score: {performance_score}")
 print("Environment State:", environment)
-```
+~~~
 ##OUTPUT:
 <img width="967" height="477" alt="image" src="https://github.com/user-attachments/assets/46e84647-45fb-48d5-8ba0-08cdfb2a43df" />
 
